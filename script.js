@@ -222,7 +222,6 @@ var phrases = [
   'Zwitserland',
   'het café',
   'het comité',
-  'één',
   'de logé',
   'oké',
   'privé',
@@ -249,7 +248,6 @@ var phrases = [
   'de familie',
   'de finale',
   'horizontaal',
-  'juli',
   'de kampioen',
   'minimaal',
   'de organisatie',
@@ -300,26 +298,25 @@ var phrases = [
   'gekochte',
   'versierde',
   'zwarte',
-  'de blamage',
-  'de collage',
-  'de energie',
-  'de giraf',
-  'de montage',
+  'blamage',
+  'collage',
+  'energie',
+  'montage',
   'origineel',
-  'de passagier',
-  'de rage',
-  'de ravage',
-  'de tatoeage',
-  'de broche',
-  'de brochure',
-  'de charme',
+  'passagier',
+  'rage',
+  'ravage',
+  'tatoeage',
+  'broche',
+  'brochure',
+  'charme',
   'Chinese',
-  'de fiche',
-  'de hartchirurg',
-  'de lunchtijd',
+  'fiche',
+  'hartchirurg',
+  'lunchtijd',
   'machinaal',
-  'de machinefabriek',
-  'de recherche'
+  'machinefabriek',
+  'recherche'
 ];
 
 var phrasePara = document.querySelector('.phrase');
@@ -343,7 +340,7 @@ function testSpeech() {
   phrasePara.textContent = phrase;
   resultPara.textContent = 'Goed of fout?';
   resultPara.style.background = 'rgba(0,0,0,0.2)';
-  diagnosticPara.textContent = '...diagnostic messages';
+  diagnosticPara.textContent = '...luisteren...';
 
   var grammar = '#JSGF V1.0; grammar phrase; public <phrase> = ' + phrase +';';
   var recognition = new SpeechRecognition();
@@ -380,9 +377,10 @@ function testSpeech() {
 
   recognition.onspeechend = function() {
     // hier kun je een timer inzetten die na halve seconde nieuw woord geeft
-    recognition.stop();
-    testBtn.disabled = false;
-    testBtn.textContent = 'Start new test';
+  //  recognition.stop();
+  //  testBtn.disabled = false;
+  //  testBtn.textContent = 'Start new test';
+    testSpeech()
   }
 
   recognition.onerror = function(event) {
