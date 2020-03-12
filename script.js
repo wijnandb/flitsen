@@ -341,7 +341,7 @@ function testSpeech() {
   // To ensure case consistency while checking with the returned output text
   phrase = phrase.toLowerCase();
   phrasePara.textContent = phrase;
-  resultPara.textContent = 'Right or wrong?';
+  resultPara.textContent = 'Goed of fout?';
   resultPara.style.background = 'rgba(0,0,0,0.2)';
   diagnosticPara.textContent = '...diagnostic messages';
 
@@ -366,19 +366,20 @@ function testSpeech() {
     // The second [0] returns the SpeechRecognitionAlternative at position 0.
     // We then return the transcript property of the SpeechRecognitionAlternative object 
     var speechResult = event.results[0][0].transcript.toLowerCase();
-    diagnosticPara.textContent = 'Speech received: ' + speechResult + '.';
+    diagnosticPara.textContent = 'Ik hoorde: ' + speechResult + '.';
     if(speechResult === phrase) {
-      resultPara.textContent = 'Ik verstond het juiste woord!';
+      resultPara.textContent = 'GOED';
       resultPara.style.background = 'lime';
     } else {
       resultPara.textContent = 'Dat klonk niet zoals ik dat wilde.';
       resultPara.style.background = 'red';
     }
 
-    console.log('Confidence: ' + event.results[0][0].confidence);
+    console.log('Zekerheid: ' + event.results[0][0].confidence);
   }
 
   recognition.onspeechend = function() {
+    // hier kun je een timer inzetten die na halve seconde nieuw woord geeft
     recognition.stop();
     testBtn.disabled = false;
     testBtn.textContent = 'Start new test';
@@ -387,7 +388,7 @@ function testSpeech() {
   recognition.onerror = function(event) {
     testBtn.disabled = false;
     testBtn.textContent = 'Start new test';
-    diagnosticPara.textContent = 'Error occurred in recognition: ' + event.error;
+    diagnosticPara.textContent = 'Fout in spraakherkenning: ' + event.error;
   }
   
   recognition.onaudiostart = function(event) {
