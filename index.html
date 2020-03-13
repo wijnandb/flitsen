@@ -14,22 +14,47 @@
   </head>
 
   <body>
-    <div class="card text-center">
-      <div class="card-header">
-        Flitsen
+    <div class="container">
+      <div class="card text-center">
+        <div class="card-header">
+          Flitsen
+        </div>
+        <div class="card-body">
+          <h1 class="card-title phrase">(hier verschijnen de woorden)</h1>
+          <button class="btn btn-primary">Start</button>
+        </div>
       </div>
-      <div class="card-body">
-        <h1 class="card-title phrase">(hier verschijnen de woorden)</h1>
-        <button class="btn btn-primary">Start</button>
-      </div>
-      <div class="card-footer text-muted" id="progress-bar"></div>
-
   
-        <p class="result">...</p>
+          <p class="result goed">...</p>
+          <p class="result fout">...</p>
+          
+      <div class="card-group">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Goed gelezen</h5>
+            <p class="card-text" id="progress-correct"></p>
+            <p class="card-text"><small class="text-muted">Aantal: </small></p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Niet goed verstaan</h5>
+            <p class="card-text" id="progress-wrong"></p>
+            <p class="card-text"><small class="text-muted">Last updated: 3 mins ago</small></p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Wat werd verstaan</h5>
+            <p class="card-text" id="progress-understood"></p>
+            <p class="card-text"><small class="text-muted">Last updated: 3 mins ago</small></p>
+          </div>
+        </div>        
+      </div>
+    </div>
 
 
 
-  </div>
     <script src="script.js"></script>
   </body>
 </html>

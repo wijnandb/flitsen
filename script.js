@@ -322,7 +322,9 @@ var phrases = [
 var phrasePara = document.querySelector('.phrase');
 var resultPara = document.querySelector('.result');
 //var diagnosticPara = document.querySelector('.output');
-var diagnosticPara = document.getElementById('progress-bar');
+var diagnosticPara = document.getElementById('progress-correct');
+var diagnosticParb = document.getElementById('progress-wrong');
+var diagnosticParc = document.getElementById('progress-understood');
 
 var testBtn = document.querySelector('button');
 
@@ -369,8 +371,10 @@ function testSpeech() {
       diagnosticPara.innerHTML += ' + ' + speechResult + '<br>';
       diagnosticPara.style.background = '#33ff99';
     } else {
-      diagnosticPara.innerHTML += ' - ' + phrase;
-      diagnosticPara.style.background = '#ff2200';
+      diagnosticParb.innerHTML += ' - ' + phrase + '<br>';
+      diagnosticParb.style.background = '#ff2200';
+      diagnosticParc.innerHTML += ' - ' + speechResult + '<br>';
+      diagnosticParc.style.background = '#ff2200';
     }
 
     console.log('Zekerheid: ' + event.results[0][0].confidence);
