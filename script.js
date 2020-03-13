@@ -34,8 +34,6 @@ var phrases = [
   'Willem II',
   'Ajax',
   'de ANWB',
-  'Coca Cola',
-  'Opel',
   'de Volkskrant',
   'de Gouden Koets',
   'middeleeuwse',
@@ -196,7 +194,6 @@ var phrases = [
   'na-apen',
   'de video-opname',
   'de zee-egel',
-  'zo-even',
   'de Noord-Brabander',
   'West-Europese',
   'Zuid-Amerika',
@@ -328,6 +325,13 @@ var diagnosticParc = document.getElementById('progress-understood');
 
 var testBtn = document.querySelector('button');
 
+var aantal_woorden = 0;
+document.getElementById("total").innerHTML = aantal_woorden;
+var aantal_goed = 0;
+document.getElementById("correct").innerHTML = aantal_goed;
+var aantal_fout = 0;
+document.getElementById("wrong").innerHTML = aantal_fout;
+
 function randomPhrase() {
   var number = Math.floor(Math.random() * phrases.length);
   return number;
@@ -335,15 +339,16 @@ function randomPhrase() {
 
 function testSpeech() {
   testBtn.disabled = true;
-  testBtn.textContent = 'Test in progress';
+  testBtn.textContent = 'Lees hardop voor';
 
   var phrase = phrases[randomPhrase()];
   // To ensure case consistency while checking with the returned output text
   phrase = phrase.toLowerCase();
   phrasePara.textContent = phrase;
-  resultPara.textContent = 'Goed of fout?';
-  resultPara.style.background = 'rgba(0,0,0,0.2)';
-  //diagnosticPara.textContent = '...luisteren...';
+//  resultPara.textContent = 'Goed of fout?';
+//  resultPara.style.background = 'rgba(0,0,0,0.2)';
+//  diagnosticPara.textContent = '...luisteren...';
+
 
   var grammar = '#JSGF V1.0; grammar phrase; public <phrase> = ' + phrase +';';
   var recognition = new SpeechRecognition();
@@ -366,15 +371,19 @@ function testSpeech() {
     // The second [0] returns the SpeechRecognitionAlternative at position 0.
     // We then return the transcript property of the SpeechRecognitionAlternative object 
     var speechResult = event.results[0][0].transcript.toLowerCase();
+    aantal_woorden += 1
+    document.getElementById("total").innerHTML = aantal_woorden;
     if(speechResult === phrase) {
 //      resultPara.textContent = speechResult;
       diagnosticPara.innerHTML += ' + ' + speechResult + '<br>';
       diagnosticPara.style.background = '#33ff99';
+      aantal_goed = aantal_goed + 1;
+      document.getElementById("correct").innerHTML = aantal_goed;
     } else {
       diagnosticParb.innerHTML += ' - ' + phrase + '<br>';
-      diagnosticParb.style.background = '#ff2200';
       diagnosticParc.innerHTML += ' - ' + speechResult + '<br>';
-      diagnosticParc.style.background = '#ff2200';
+      aantal_fout = aantal_fout + 1;
+      document.getElementById("wrong").innerHTML = aantal_fout;
     }
 
     console.log('Zekerheid: ' + event.results[0][0].confidence);
