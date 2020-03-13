@@ -321,7 +321,8 @@ var phrases = [
 
 var phrasePara = document.querySelector('.phrase');
 var resultPara = document.querySelector('.result');
-var diagnosticPara = document.querySelector('.output');
+//var diagnosticPara = document.querySelector('.output');
+var diagnosticPara = document.getElementById('progress-bar');
 
 var testBtn = document.querySelector('button');
 
@@ -340,7 +341,7 @@ function testSpeech() {
   phrasePara.textContent = phrase;
   resultPara.textContent = 'Goed of fout?';
   resultPara.style.background = 'rgba(0,0,0,0.2)';
-  diagnosticPara.textContent = '...luisteren...';
+  //diagnosticPara.textContent = '...luisteren...';
 
   var grammar = '#JSGF V1.0; grammar phrase; public <phrase> = ' + phrase +';';
   var recognition = new SpeechRecognition();
@@ -363,13 +364,13 @@ function testSpeech() {
     // The second [0] returns the SpeechRecognitionAlternative at position 0.
     // We then return the transcript property of the SpeechRecognitionAlternative object 
     var speechResult = event.results[0][0].transcript.toLowerCase();
-    diagnosticPara.textContent = 'Ik hoorde: ' + speechResult + '.';
     if(speechResult === phrase) {
-      resultPara.textContent = 'GOED';
-      resultPara.style.background = 'lime';
+//      resultPara.textContent = speechResult;
+      diagnosticPara.innerHTML += ' + ' + speechResult + '<br>';
+      diagnosticPara.style.background = '#33ff99';
     } else {
-      resultPara.textContent = 'Dat klonk niet zoals ik dat wilde.';
-      resultPara.style.background = 'red';
+      diagnosticPara.innerHTML += ' - ' + phrase;
+      diagnosticPara.style.background = '#ff2200';
     }
 
     console.log('Zekerheid: ' + event.results[0][0].confidence);
@@ -377,16 +378,19 @@ function testSpeech() {
 
   recognition.onspeechend = function() {
     // hier kun je een timer inzetten die na halve seconde nieuw woord geeft
+    // nu zo aangepast dat automatisch nieuw woord wordt gevraagd
+    // onderstaande drie waren ongecomment in origineel
   //  recognition.stop();
   //  testBtn.disabled = false;
   //  testBtn.textContent = 'Start new test';
+  // hierdoor wordt nieuw woord gevraagd
     testSpeech()
   }
 
   recognition.onerror = function(event) {
     testBtn.disabled = false;
     testBtn.textContent = 'Start new test';
-    diagnosticPara.textContent = 'Fout in spraakherkenning: ' + event.error;
+//    diagnosticPara.textContent = 'Fout in spraakherkenning: ' + event.error;
   }
   
   recognition.onaudiostart = function(event) {
