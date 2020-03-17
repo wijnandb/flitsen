@@ -392,7 +392,7 @@ function testSpeech() {
   //  testBtn.disabled = false;
   //  testBtn.textContent = 'Start new test';
   // hierdoor wordt nieuw woord gevraagd, toegevoegd als alternatief
-    if (aantal_woorden > 10) {
+    if (aantal_woorden < 10) {
       testSpeech()
     } else {
       recognition.stop();
