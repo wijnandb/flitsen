@@ -31,7 +31,6 @@ var phrases = [
   'Koninginnedag',
   'de middeleeuwen',
   'de Tweede Wereldoorlog',
-  'Willem II',
   'Ajax',
   'de ANWB',
   'de Volkskrant',
@@ -226,11 +225,6 @@ var phrases = [
   'de crèche',
   'de crème',
   'hè',
-  'de bangeriken',
-  'de flauweriken',
-  'de monniken',
-  'de stommeriken',
-  'de viezeriken',
   'de criteria',
   'de minima',
   'de musea',
@@ -339,11 +333,12 @@ function randomPhrase() {
 
 function testSpeech() {
   testBtn.disabled = true;
-  testBtn.textContent = 'Lees hardop voor';
+  testBtn.textContent = '';
 
   var phrase = phrases[randomPhrase()];
+//  var phrase = phrases[aantal_woorden]
   // To ensure case consistency while checking with the returned output text
-  phrase = phrase.toLowerCase();
+//  phrase = phrase.toLowerCase();
   phrasePara.textContent = phrase;
 //  resultPara.textContent = 'Goed of fout?';
 //  resultPara.style.background = 'rgba(0,0,0,0.2)';
@@ -370,12 +365,12 @@ function testSpeech() {
     // These also have getters so they can be accessed like arrays.
     // The second [0] returns the SpeechRecognitionAlternative at position 0.
     // We then return the transcript property of the SpeechRecognitionAlternative object 
-    var speechResult = event.results[0][0].transcript.toLowerCase();
+    var speechResult = event.results[0][0].transcript;
     aantal_woorden += 1
     document.getElementById("total").innerHTML = aantal_woorden;
-    if(speechResult === phrase) {
+    if(speechResult.toLowerCase() === phrase.toLowerCase()) {
 //      resultPara.textContent = speechResult;
-      diagnosticPara.innerHTML += ' + ' + speechResult + '<br>';
+      diagnosticPara.innerHTML += ' + ' + phrase + '<br>';
       diagnosticPara.style.background = '#33ff99';
       aantal_goed = aantal_goed + 1;
       document.getElementById("correct").innerHTML = aantal_goed;
@@ -396,8 +391,14 @@ function testSpeech() {
   //  recognition.stop();
   //  testBtn.disabled = false;
   //  testBtn.textContent = 'Start new test';
-  // hierdoor wordt nieuw woord gevraagd
-    testSpeech()
+  // hierdoor wordt nieuw woord gevraagd, toegevoegd als alternatief
+    if (aantal_woorden > 10) {
+      testSpeech()
+    } else {
+      recognition.stop();
+      testBtn.disabled = false;
+      testBtn.textContent = 'Nog een keer';
+    }
   }
 
   recognition.onerror = function(event) {
@@ -447,3 +448,4 @@ function testSpeech() {
 }
 
 testBtn.addEventListener('click', testSpeech);
+
