@@ -382,6 +382,11 @@ function testSpeech() {
     }
 
     console.log('Zekerheid: ' + event.results[0][0].confidence);
+    if (aantal_woorden > 9) {
+      recognition.stop();
+      testBtn.disabled = false;
+      testBtn.textContent = 'Nog een keertje?';
+    }
   }
 
   recognition.onspeechend = function() {
@@ -392,13 +397,7 @@ function testSpeech() {
   //  testBtn.disabled = false;
   //  testBtn.textContent = 'Start new test';
   // hierdoor wordt nieuw woord gevraagd, toegevoegd als alternatief
-    if (aantal_woorden < 10) {
-      testSpeech()
-    } else {
-      recognition.stop();
-      testBtn.disabled = false;
-      testBtn.textContent = 'Nog een keer';
-    }
+  testSpeech()
   }
 
   recognition.onerror = function(event) {
